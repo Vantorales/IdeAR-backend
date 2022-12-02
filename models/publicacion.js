@@ -13,7 +13,7 @@ const PublicacionSchema = Schema({
         required: [true, 'El contenido es obligatorio']
     },
     fechaCreacion: {
-        type: new ISODate()
+        type: Date
     }
 });
 

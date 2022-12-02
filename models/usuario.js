@@ -22,7 +22,7 @@ const UsuarioSchema = Schema({
         type: String
     },
     fechaNacimiento: {
-        type: Date()
+        type: Date
     },
     email: {
         type: String,
