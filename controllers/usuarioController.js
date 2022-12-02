@@ -2,13 +2,6 @@ const { response, request } = require('express');
 
 const Usuario = require('../models/usuario');
 
-const usuariosGet = async(req = request, res = response) => {
-
-    const Usuarios = await Usuario.find()
-
-res.json({ Usuarios });
-}
-
 const usuariosPost = async(req, res = response) => {
     
     const { nombre, apellido, nickname, areaInteres, email, contraseña } = req.body;
@@ -23,4 +16,30 @@ const usuariosPost = async(req, res = response) => {
     });
 }
 
-module.exports = { usuariosPost };
+const usuariosGet = async(req = request, res = response) => {
+
+    const usuarios = await Usuario.find()
+
+res.json({ usuarios });
+}
+
+const deleteUsuario =  async(req, res = response) =>{
+    const { id } = req.body;
+    const usuario = await Usuario.findByIdAndDelete(id);
+    res.json(usuario);
+}
+
+const updateUsuario = async(req, res) => {
+
+    const { __v,id, ...resto} = req.body;
+    res.json(resto);
+    const usuario = await Usuario.findByIdAndUpdate( id, resto)
+}
+
+
+module.exports = { 
+    usuariosPost,
+    usuariosGet,
+    deleteUsuario,
+    updateUsuario
+};
