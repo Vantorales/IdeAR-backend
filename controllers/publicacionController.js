@@ -33,8 +33,7 @@ const addPublicacionPost = async(req, res = response) => {
     await publicacion.save();
 
     res.json({
-        publicacion,
-        msg:"Publicacion creada"
+        creacionCorrecta:"true"
     });
     }catch(e){
         console.log(e.message);

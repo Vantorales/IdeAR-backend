@@ -5,16 +5,16 @@ const Usuario = require('../models/usuario');
 const usuariosPost = async(req, res = response) => {
     try{
         
-        const { nombre, apellido, email, contraseña } = req.body;
-        const nickname = apellido +  nombre;
+        const { nombre, apellido,nickname, email, contraseña } = req.body;
+        console.log(req.body);
+        // const nickname = apellido +  nombre;
         const usuario = new Usuario({ nombre, apellido, nickname, email, contraseña });
         console.log("Guardando usuario");
         // Guardar en BD
         await usuario.save();
     
         res.json({
-            usuario,
-            msg:"Usuario registrado."
+            creacionCorrecta:"true"
         });
 
     }catch(e){
