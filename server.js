@@ -39,6 +39,7 @@ class Server {
         this.app.use( require('./routes/usuarios') );
         this.app.use( require('./routes/publicacion') );
         this.app.use( require('./routes/healthIdear') );
+        this.app.use( require('./routes/comentario'));
     }
     
     listen() {

@@ -30,17 +30,32 @@ const usuariosGet = async(req = request, res = response) => {
 res.json({ usuarios });
 }
 
+const usuarioGet = async(req, res =  response) => {
+
+    const { id } = req.body;
+    const usuario = await Usuario.find({_id: id });
+    console.log(usuario);
+
+    res.json({ usuario });
+}
+
 const deleteUsuario =  async(req, res = response) =>{
     const { id } = req.body;
     const usuario = await Usuario.findByIdAndDelete(id);
-    res.json(usuario);
+    res.json({
+        usuario,
+        msg:"Usuario eliminado"
+    });
 }
 
 const updateUsuario = async(req, res) => {
 
-    const { __v,id, ...resto} = req.body;
-    res.json(resto);
-    const usuario = await Usuario.findByIdAndUpdate( id, resto)
+    const {id, nombre, apellido, email, ...resto} = req.body;
+    const usuario = await Usuario.findByIdAndUpdate( id, resto);
+    res.json({
+        usuario,
+        msg: "Usuario editado"
+    });
 }
 
 
@@ -48,5 +63,6 @@ module.exports = {
     usuariosPost,
     usuariosGet,
     deleteUsuario,
-    updateUsuario
+    updateUsuario,
+    usuarioGet
 };

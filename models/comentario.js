@@ -1,19 +1,24 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, moongose } = require('mongoose');
+
+const Usuario = model('Usuario');
+const Publicacion = model('Publicacion');
 
 const ComentarioSchema = Schema({
     idUsuario: {
-        type: Schema.ObjectId, ref: "Usuario" 
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario'
     },
     idPublicacion: {
-        type: Schema.ObjectId, ref: "Publicacion"
+        type: Schema.Types.ObjectId,
+        ref: 'Publicacion'
     },
     contenido:{
         type: String,
         required: [true, 'El comentario no puede estar vacio']
     },
     fechaCreacion: {
-        type: new ISODate()
+        type: String
     }
 });
 
-module.exports =  moongose.model ('Comentario', ComentarioSchema);
+module.exports =  model ('Comentario', ComentarioSchema);
