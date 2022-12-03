@@ -4,7 +4,7 @@ const { usuariosPost, updateUsuario } = require('../controllers/usuarioControlle
 
 const router = Router();
 
-router.post('/api/nuevo-usuario',usuariosPost );
-router.get('/api/updateUsuario', updateUsuario );
+router.post('/api/nuevoUsuario',usuariosPost );
+router.put('/api/updateUsuario', updateUsuario );
 
 module.exports = router;

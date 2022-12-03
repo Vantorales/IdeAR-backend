@@ -3,17 +3,24 @@ const { response, request } = require('express');
 const Usuario = require('../models/usuario');
 
 const usuariosPost = async(req, res = response) => {
+    try{
+        
+        const { nombre, apellido, email, contraseña } = req.body;
+        const nickname = apellido +  nombre;
+        const usuario = new Usuario({ nombre, apellido, nickname, email, contraseña });
+        console.log("Guardando usuario");
+        // Guardar en BD
+        await usuario.save();
     
-    const { nombre, apellido, nickname, areaInteres, email, contraseña } = req.body;
-    const usuario = new Usuario({ nombre, apellido, nickname, areaInteres, email, contraseña });
+        res.json({
+            usuario,
+            msg:"Usuario registrado."
+        });
 
-    // Guardar en BD
-    await usuario.save();
-
-    res.json({
-        usuario,
-        msg:"Usuario registrado."
-    });
+    }catch(e){
+        console.log(e)
+    }
+   
 }
 
 const usuariosGet = async(req = request, res = response) => {

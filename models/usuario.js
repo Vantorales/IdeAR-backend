@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 
 const UsuarioSchema = Schema({
     nombre: {
@@ -16,7 +16,6 @@ const UsuarioSchema = Schema({
     },
     areaInteres: {
         type: String,
-        required: [true, 'El área de interés es obligatorio']
     },
     github: {
         type: String
@@ -42,7 +41,11 @@ const UsuarioSchema = Schema({
     //falta foto de perfil
     reputacion: {
         type: Number
-    }
+    },
+    publicaciones: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Publicaciones'
+    }]
 });
 
 UsuarioSchema.methods.toJSON = function() {
@@ -50,4 +53,4 @@ UsuarioSchema.methods.toJSON = function() {
     return usuario
 }
 
-module.exports = model('Usuario', UsuarioSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);

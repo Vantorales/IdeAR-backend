@@ -16,4 +16,4 @@ const ComentarioSchema = Schema({
     }
 });
 
-module.exports =  model ('Comentario', ComentarioSchema);
+module.exports =  moongose.model ('Comentario', ComentarioSchema);

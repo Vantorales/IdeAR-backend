@@ -1,9 +1,8 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 
-const PublicacionSchema = Schema({
-    idUsuario: {
-        type: Schema.ObjectId, ref: "Usuario" 
-    },
+const Usuario = mongoose.model('Usuario');
+
+const PublicacionSchema = Schema({    
     titulo: {
         type: String,
         required: [true, 'El titulo es obligatorio']
@@ -13,8 +12,12 @@ const PublicacionSchema = Schema({
         required: [true, 'El contenido es obligatorio']
     },
     fechaCreacion: {
-        type: Date
-    }
+        type: String
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario'
+    },
 });
 
-module.exports =  model ('Publicacion', PublicacionSchema);
+module.exports =  mongoose.model ('Publicacion', PublicacionSchema);
