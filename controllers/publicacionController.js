@@ -12,11 +12,17 @@ const publicacionesGet = async(req = request, res = response) => {
 
 const publicacionGet = async(req, res =  response) => {
 
-    const { id } = req.body;
-    const publicacion = await Publicacion.find({_id: id });
-    console.log(publicacion);
 
-    res.json({ publicacion });
+    const { id } = req.body;
+    await Publicacion.find({_id: id }).populate('usuario').exec((err, publicacion)=>{
+        if(err){
+            return res.status(500).json({
+                msg:"Se produjo un error al intentar buscar la publicación"
+            });
+        }
+        res.status(200).json({ publicacion });
+
+    });
 
 }
 
