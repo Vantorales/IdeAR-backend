@@ -32,8 +32,8 @@ res.json({ usuarios });
 
 const usuarioGet = async(req, res =  response) => {
 
-    const { id } = req.body;
-    const usuario = await Usuario.find({_id: id });
+    const { nickname } = req.body;
+    const usuario = await Usuario.find({ nickname : nickname });
     console.log(usuario);
 
     res.json({ usuario });
@@ -50,8 +50,10 @@ const deleteUsuario =  async(req, res = response) =>{
 
 const updateUsuario = async(req, res) => {
 
-    const {id, nombre, apellido, email, ...resto} = req.body;
-    const usuario = await Usuario.findByIdAndUpdate( id, resto);
+    const {nickname, nombre, apellido, email, ...resto} = req.body;
+    const dataUser = await Usuario.find({ nickname : nickname });
+    const id = dataUser[0]._id
+    const usuario = await Usuario.findByIdAndUpdate(id , resto);
     res.json({
         usuario,
         msg: "Usuario editado"
