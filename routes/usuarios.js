@@ -8,7 +8,7 @@ router.post('/api/nuevoUsuario',usuariosPost );
 router.put('/api/editarUsuario', updateUsuario );
 router.get('/api/obtenerUsuarios', usuariosGet);
 router.delete('/api/eliminarUsuario', deleteUsuario);
-router.get('/api/obtenerUsuario', usuarioGet);
+router.post('/api/obtenerUsuario', usuarioGet);
 router.post('/api/verificarUsuario',verificarUsuario );
 
 module.exports = router;

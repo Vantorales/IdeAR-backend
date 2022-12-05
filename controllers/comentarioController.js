@@ -8,7 +8,9 @@ const Usuario = require('../models/usuario');
 const addComentarioPost = async(req = request, res = response) => {
 
 
-    const {idUsuario, idPublicacion, contenido, fechaCreacion} = req.body
+    const { idPublicacion,nickname, contenido, fechaCreacion} = req.body
+    const data = await Usuario.find({ nickname });
+    const idUsuario = data[0]._id; 
     const comentario = new Comentario({idUsuario: idUsuario, idPublicacion: idPublicacion, contenido, fechaCreacion});
 
     await comentario.save();

@@ -36,8 +36,8 @@ res.json({ usuarios });
 
 const usuarioGet = async(req, res =  response) => {
 
-    const { id } = req.body;
-    const usuario = await Usuario.find({_id: id });
+    const { nickname } = req.body;
+    const usuario = await Usuario.find({ nickname });
 
     res.json({ usuario });
 }
@@ -53,8 +53,13 @@ const deleteUsuario =  async(req, res = response) =>{
 
 const updateUsuario = async(req, res) => {
 
-    const {id, nombre, apellido, email, ...resto} = req.body;
+    const { nombre, apellido, email, nickname, ...resto} = req.body;
+    let dataUser  = await Usuario.find({ nickname });
+    console.log(dataUser);
+    const id = dataUser[0]._id;
+    console.log(id);
     const usuario = await Usuario.findByIdAndUpdate( id, resto);
+
     res.json({
         usuario,
         msg: "Usuario editado"
@@ -66,7 +71,7 @@ const verificarUsuario = async(req, res) => {
 
     const {email, contraseña} = req.body;
     const usuario = await Usuario.find( {email:email} );
-    console.log("usuario "+usuario[0].apellido);
+    console.log("usuario "+ usuario[0].apellido);
     console.log("contraseña " + usuario[0].contraseña);
 
     console.log(contraseña);
@@ -76,12 +81,12 @@ const verificarUsuario = async(req, res) => {
     if(contraseña == usuario[0].contraseña){
         res.status(200).json({
             usuarioverificado:true,
-            nombre: usuario[0].nombre
+            nickname: usuario[0].nickname
         });
     }else{
         res.status(500).json({
             usuarioverificado:false,
-            nombre:""
+            nickname:""
         });
     }
     
