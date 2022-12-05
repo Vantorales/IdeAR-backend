@@ -5,9 +5,16 @@ const Usuario = require('../models/usuario');
 
 const publicacionesGet = async(req = request, res = response) => {
 
-    const publicaciones = await Publicacion.find()
+    const publicaciones = await Publicacion.find().populate('usuario').exec((err, publicacion)=>{
+        if(err){
+            return res.status(500).json({
+                msg:"Se produjo un error al intentar buscar la publicación"
+            });
+        }
+        res.status(200).json({ publicacion });
 
-    res.json({ publicaciones });
+    });
+
 }
 
 const publicacionGet = async(req, res =  response) => {

@@ -5,7 +5,7 @@ const { addPublicacionPost, publicacionesGet, publicacionGet, publicacionDelete,
 const router = Router();
 
 router.post('/api/nuevaPublicacion', addPublicacionPost);
-router.get('/api/obtenerPublicaciones', publicacionesGet);
+router.post('/api/obtenerPublicaciones', publicacionesGet);
 router.post('/api/obtenerPublicacion', publicacionGet);
 router.delete('/api/eliminarPublicacion', publicacionDelete);
 router.put('/api/editarPublicacion', publicacionUpdate);

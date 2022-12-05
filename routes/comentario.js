@@ -5,7 +5,7 @@ const { addComentarioPost, comentariosGet, comentarioDelete, comentarioUpdate } 
 const router = Router();
 
 router.post('/api/nuevoComentario', addComentarioPost);
-router.get('/api/obtenerComentarios', comentariosGet);
+router.post('/api/obtenerComentarios', comentariosGet);
 router.delete('/api/eliminarComentario', comentarioDelete);
 router.put('/api/editarComentario', comentarioUpdate);
 

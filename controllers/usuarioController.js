@@ -5,20 +5,22 @@ const Usuario = require('../models/usuario');
 const usuariosPost = async(req, res = response) => {
     try{
         
-        const { nombre, apellido,nickname, email, contraseña } = req.body;
-        console.log(req.body);
-        // const nickname = apellido +  nombre;
+        const { nombre, apellido, nickname, email, contraseña } = req.body;
+        
         const usuario = new Usuario({ nombre, apellido, nickname, email, contraseña });
         console.log("Guardando usuario");
         // Guardar en BD
         await usuario.save();
     
-        res.json({
-            creacionCorrecta:"true"
+        res.status(200).json({
+            msg:"Usuario registrado."
         });
 
     }catch(e){
         console.log(e)
+        res.status(500).json({
+            msg:"No se pudo registrar"
+        });
     }
    
 }
@@ -32,9 +34,8 @@ res.json({ usuarios });
 
 const usuarioGet = async(req, res =  response) => {
 
-    const { nickname } = req.body;
-    const usuario = await Usuario.find({ nickname : nickname });
-    console.log(usuario);
+    const { id } = req.body;
+    const usuario = await Usuario.find({_id: id });
 
     res.json({ usuario });
 }
@@ -50,14 +51,38 @@ const deleteUsuario =  async(req, res = response) =>{
 
 const updateUsuario = async(req, res) => {
 
-    const {nickname, nombre, apellido, email, ...resto} = req.body;
-    const dataUser = await Usuario.find({ nickname : nickname });
-    const id = dataUser[0]._id
-    const usuario = await Usuario.findByIdAndUpdate(id , resto);
+    const {id, nombre, apellido, email, ...resto} = req.body;
+    const usuario = await Usuario.findByIdAndUpdate( id, resto);
     res.json({
         usuario,
         msg: "Usuario editado"
     });
+}
+
+
+const verificarUsuario = async(req, res) => {
+
+    const {email, contraseña} = req.body;
+    const usuario = await Usuario.find( {email:email} );
+    console.log("usuario "+usuario[0].apellido);
+    console.log("contraseña " + usuario[0].contraseña);
+
+    console.log(contraseña);
+
+    
+
+    if(contraseña == usuario[0].contraseña){
+        res.status(200).json({
+            usuarioverificado:true,
+            nombre: usuario[0].nombre
+        });
+    }else{
+        res.status(500).json({
+            usuarioverificado:false,
+            nombre:""
+        });
+    }
+    
 }
 
 
@@ -66,5 +91,6 @@ module.exports = {
     usuariosGet,
     deleteUsuario,
     updateUsuario,
-    usuarioGet
+    usuarioGet,
+    verificarUsuario
 };

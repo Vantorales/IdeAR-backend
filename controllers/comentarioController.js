@@ -24,10 +24,17 @@ const comentariosGet = async (req, res = response) => {
     console.log("entro");
     const { idPublicacion } = req.body;
     console.log(idPublicacion);
-    const comentarios = await Comentario.find({idPublicacion: idPublicacion});
+    await Comentario.find({idPublicacion: idPublicacion}).populate('idUsuario').populate( 'idPublicacion').exec((err, comentarios)=>{
+       console.log("entro populate");
+        if(err){
+            console.log(err);
+            return res.status(500).json({
+                msg:"Se produjo un error al intentar buscar la publicacion"
+            });
+        }
+        res.status(200).json({ comentarios });
+    });
 
-
-    res.json({ comentarios });
 }
 
 const comentarioDelete = async ( req, res = response) => {
