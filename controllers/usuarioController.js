@@ -6,19 +6,21 @@ const usuariosPost = async(req, res = response) => {
     try{
         
         const { nombre, apellido, nickname, email, contraseña } = req.body;
-        
+
         const usuario = new Usuario({ nombre, apellido, nickname, email, contraseña });
         console.log("Guardando usuario");
         // Guardar en BD
         await usuario.save();
     
         res.status(200).json({
+            creacionCorrecta: true,
             msg:"Usuario registrado."
         });
 
     }catch(e){
         console.log(e)
         res.status(500).json({
+            creacionCorrecta: false,
             msg:"No se pudo registrar"
         });
     }
